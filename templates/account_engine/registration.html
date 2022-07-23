@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Registration Page  {%endblock %}
+{% block content %}
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-md-5">
+
+      <img src=" https://cdn.dribbble.com/users/2317423/screenshots/14354672/social_media_marketing_4x.jpg" class="img-fluid" alt="...">
+        <img src="https://previews.123rf.com/images/apinan/apinan1903/apinan190300011/120475845-flat-vector-illustration-social-media-and-digital-marketing-online-connection-concept-with-business-.jpg" class="img-fluid" alt="...">
+          <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2020/08/Social_media_strategy_jpg_nLvbqTk4.jpg?auto=format&q=60&w=1280&h=720&fit=crop&crop=faces" class="img-fluid" alt="...">
+
+    </div>
+    <div class="col-md-5 p-4">
+      <div class="alert alert-primary" role="alert">
+        already have an account? <a href="{% url 'user_login' %}" class="text-decoration-none alert-link">Login In</a>. Give it a click if you like.
+      </div>
+      <h1>Create and accounts</h1>
+      <form class="mb-2" action="" method="post" >
+        {% csrf_token %}
+        {{form|crispy}}
+        <input class="btn btn-primary" type="submit" name="" value="Register">
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
