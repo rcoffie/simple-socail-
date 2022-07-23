@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+    <img src="https://thumbs.dreamstime.com/b/social-network-social-media-online-community-chat-message-news-website-user-blogger-flat-cartoon-illustration-social-network-135196588.jpg" class="img-fluid" alt="...">
+    </div>
+
+    <div class="col-md-5">
+      <h3><strong class="text-secondary">Happening Now </strong></h3>
+      <h5 class="text-secondary">Join Socialize Today. </h5>
+
+      <hr>
+      <form class="mb-2" action="" method="POST">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input class="btn btn-success" type="submit" name="" value="Login">
+      </form>
+      <div class="alert alert-primary" role="alert">
+  Don't have an Account ? create on <a href="{% url 'user_registration' %}" class="alert-link text-decoration-none">SignUp</a>. Give it a click if you like.
+</div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
