@@ -17,7 +17,7 @@ def user_registration(request):
             new_user = form.save()
             Profile.objects.create(user=new_user)
             messages.success(request, "Account Created")
-            return redirect("index")
+            return redirect("user_login")
     else:
         form = RegistrationForm()
     return render(request, "account_engine/registration.html", {"form": form})
