@@ -12,6 +12,8 @@ from account_engine.forms import (ProfileEditForm, RegistrationForm,
                                   UserEditForm)
 from account_engine.models import Profile
 from django.contrib import messages
+from django.contrib.auth.views import PasswordChangeView, PasswordResetDoneView
+from django.contrib.auth.forms import PasswordChangeForm
 # Create your views here.
 
 
@@ -28,6 +30,8 @@ def user_registration(request):
                 return redirect("user_login")
             else:
                 form = RegistrationForm()
+        else:
+            form = RegistrationForm()
     return render(request, "account_engine/registration.html", {"form": form})
 
 
@@ -94,6 +98,19 @@ def user_logout(request):
     logout(request)
     return redirect('user_login')
 
+
+def password_change(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            login(request, request.user)
+            messages.success(request,('password successfully changed'))
+            return redirect('profile')
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+    return render(request, 'password/password_change.html',{'form':form})
 
 
 def password_reset_request(request):
