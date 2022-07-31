@@ -1,25 +1,29 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    PasswordChangeForm,
+    PasswordResetForm,
+)
+from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.views import PasswordChangeView, PasswordResetDoneView
+from django.core.mail import BadHeaderError, send_mail
 from django.db.models.query_utils import Q
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from django.core.mail import send_mail, BadHeaderError
-from django.template.loader import render_to_string
-from account_engine.forms import (ProfileEditForm, RegistrationForm,
-                                  UserEditForm)
+
+from account_engine.forms import ProfileEditForm, RegistrationForm, UserEditForm
 from account_engine.models import Profile
-from django.contrib import messages
-from django.contrib.auth.views import PasswordChangeView, PasswordResetDoneView
-from django.contrib.auth.forms import PasswordChangeForm
+
 # Create your views here.
 
 
 def user_registration(request):
     if request.user.is_authenticated:
-        return redirect('profile')
+        return redirect("profile")
     else:
         if request.method == "POST":
             form = RegistrationForm(request.POST)
@@ -37,7 +41,7 @@ def user_registration(request):
 
 def user_login(request):
     if request.user.is_authenticated:
-        return redirect('profile')
+        return redirect("profile")
     else:
         if request.method == "POST":
             form = AuthenticationForm(request, data=request.POST)
@@ -88,7 +92,8 @@ def edit_profile(request):
 
 def profile(request):
 
-    return render(request,'account_engine/profile.html')
+    return render(request, "account_engine/profile.html")
+
 
 def index(request):
     return render(request, "index.html")
@@ -96,51 +101,20 @@ def index(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('user_login')
+    return redirect("user_login")
 
 
 def password_change(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PasswordChangeForm(user=request.user, data=request.POST)
         if form.is_valid():
             form.save()
             login(request, request.user)
-            messages.success(request,('password successfully changed'))
-            return redirect('profile')
+            messages.success(request, ("password successfully changed"))
+            return redirect("profile")
     else:
         form = PasswordChangeForm(user=request.user)
 
-    return render(request, 'password/password_change.html',{'form':form})
-
-
-def password_reset_request(request):
-	if request.method == "POST":
-		password_reset_form = PasswordResetForm(request.POST)
-		if password_reset_form.is_valid():
-			data = password_reset_form.cleaned_data['email']
-			associated_users = User.objects.filter(Q(email=data))
-			if associated_users.exists():
-				for user in associated_users:
-					subject = "Password Reset Requested"
-					email_template_name = "main/password/password_reset_email.txt"
-					c = {
-					"email":user.email,
-					'domain':'127.0.0.1:8000',
-					'site_name': 'Website',
-					"uid": urlsafe_base64_encode(force_bytes(user.pk)),
-					'token': default_token_generator.make_token(user),
-					'protocol': 'http',
-					}
-					email = render_to_string(email_template_name, c)
-					try:
-						send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
-					except BadHeaderError:
-
-						return HttpResponse('Invalid header found.')
-
-					messages.success(request, 'A message with reset password instructions has been sent to your inbox.')
-                    #Todo change the redirect view in future
-					return redirect ("profile")
-			messages.error(request, 'An invalid email has been entered.')
-	password_reset_form = PasswordResetForm()
-	return render(request=request, template_name="main/password/password_reset.html", context={"password_reset_form":password_reset_form})
+    return render(
+        request, "account_engine/password_reset/password_change.html", {"form": form}
+    )
