@@ -1,0 +1,9 @@
+body{
+    background-color: rgb(224, 224, 238) !important;
+}
+.box{
+    align-items: center;
+}
+.text{
+    color: black !important;
+}

@@ -1,13 +1,28 @@
 {% extends 'base.html' %}
-
-
+{% load humanize %}
 {% block content %}
-
+{% load static%}
+{% block head %} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endblock%}
 <div class="container">
   <div class="row">
     <div class="col-md-12">
       <h1>welcome {{request.user }}</h1>
+      {% for post in post_list%}
+        <div class="box">
+          <div class="card mx-auto mb-3" style="width: 50rem;">
+            <div class="card-body">
+              <h5 class="card-text px-5"><a href = "{%url 'post_detail' post.id%}" class="text-decoration-none text" >{{post.posts | truncatechars:150}}</a></h5>
+              {% if post.image %}
+                <img class="px-5" style="width: 25rem; border-radius: 15px" src="{{post.image.url}}" alt="postimage">
+                <br>
+              {% endif %}
+              <small class="px-5">{{post.post_date}}</small>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
     </div>
+
   </div>
 </div>
 {% endblock %}

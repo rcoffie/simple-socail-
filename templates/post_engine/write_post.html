@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{%load crispy_forms_tags%}
+{%block title%} Post form {% endblock %}
+{% block content %}
+    <div class="container ">
+        <br>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        <form action="" method='POST' enctype='multipart/form-data'>
+            {% csrf_token %}
+            {{post_form | crispy}}
+            <input class="btn btn-primary" type="submit" value="post">
+        </form>
+
+    </div>
+{% endblock %}

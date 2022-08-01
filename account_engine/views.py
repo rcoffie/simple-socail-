@@ -15,7 +15,13 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
+
 from account_engine.forms import ProfileEditForm, RegistrationForm, UserEditForm
+
+
+from account_engine.forms import (ProfileEditForm, RegistrationForm,
+                                  UserEditForm)
+
 from account_engine.models import Profile
 
 # Create your views here.
@@ -95,12 +101,9 @@ def profile(request):
     return render(request, "account_engine/profile.html")
 
 
-def index(request):
-    return render(request, "index.html")
-
-
 def user_logout(request):
     logout(request)
+
     return redirect("user_login")
 
 
@@ -118,3 +121,8 @@ def password_change(request):
     return render(
         request, "account_engine/password_reset/password_change.html", {"form": form}
     )
+
+
+
+
+
