@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect, render
 
+
 from account_engine.forms import (ProfileEditForm, RegistrationForm,
                                   UserEditForm)
 from account_engine.models import Profile
@@ -75,10 +76,8 @@ def profile(request):
 
     return render(request,'account_engine/profile.html')
 
-def index(request):
-    return render(request, "index.html")
-
-
 def user_logout(request):
     logout(request)
     return redirect('user_login')
+
+
