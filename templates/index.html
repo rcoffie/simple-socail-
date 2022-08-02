@@ -1,21 +1,72 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 
 
 {% block content %}
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1>welcome {{request.user}}</h1>
-      {%for post in posts %}
-      <h3>{{post.user.username}}</h3>
-        <a href="{%url 'post_detail' post.id %}">{{post.post| truncatechars:10 }}</a>
-        {% if post.image %}
-          <img src = "{{post.image.url}}" alt = "post image">
-        {% endif %}
-        <small>{{post.date}}</small>
+<div class="container p-4">
+  <div class="row m-4">
+    <div class="col-md-2">
+      <div class="d-grid gap-2">
+        <button class="btn btn-success" type="button">FEED</button>
+        <button class="btn btn-success" type="button">PROFILE</button>
+        <button class="btn btn-success" type="button">EXPLORE</button>
+        <button class="btn btn-success" type="button">LOGOUT</button>
+        <button class="btn btn-success" type="button">Button</button>
+        <button class="btn btn-success" type="button">Button</button>
+      </div>
+    </div>
+    <div class="col-md-6 ">
+      <div class="mb-4  text-center">
+        <button type="button" class="btn btn-light" data-bs-toggle="button" autocomplete="off">Toggle button</button>
+        <button type="button" class="btn btn-light active" data-bs-toggle="button" autocomplete="off" aria-pressed="true">Active toggle button</button>
+        <button type="button" class="btn btn-light active" data-bs-toggle="button" autocomplete="off" aria-pressed="true">Active toggle button</button>
+
+      </div>
+
+      <input class="form-control mb-4" type="text" placeholder="What's on your mind" aria-label="Disabled input example" >
+
+      {% if posts %}
+      {% for each in posts %}
+      <div class="card mb-4" >
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p class="card-text">{{each.post}}</p>
+          <a href="#" class="card-link">Card link</a>
+          <a href="#" class="card-link">Another link</a>
+        </div>
+      </div>
       {% endfor %}
+      {% endif %}
+
+    </div>
+    <div class="col-md-3 ">
+    <input class="form-control" type="text" placeholder="Search" input here..." aria-label="readonly input example" >
+    <div class="card">
+      <div class="card-body">
+        This is some text within a card body.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        This is some text within a card body.
+      </div>
+    </div>
+
+    <div class="card">
+  <div class="card-body">
+    This is some text within a card body.
+  </div>
+</div>
+
+<div class="card">
+<div class="card-body">
+This is some text within a card body.
+</div>
+</div>
     </div>
   </div>
 </div>
+
 {% endblock %}
