@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class PostInfo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.TextField()
-    image = models.ImageField(upload_to = 'post_images', default ='default.jpg')
+    image = models.ImageField(upload_to = 'post_images', blank=True,)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
