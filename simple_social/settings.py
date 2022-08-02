@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     #installed app
     'account_engine',
+    'post_engine'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap'

@@ -6,7 +6,15 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h1>welcome {{request.user }}</h1>
+      <h1>welcome {{request.user}}</h1>
+      {%for post in posts %}
+      <h3>{{post.user.username}}</h3>
+        <a href="{%url 'post_detail' post.id %}">{{post.post| truncatechars:10 }}</a>
+        {% if post.image %}
+          <img src = "{{post.image.url}}" alt = "post image">
+        {% endif %}
+        <small>{{post.date}}</small>
+      {% endfor %}
     </div>
   </div>
 </div>

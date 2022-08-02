@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for post in posts %}
+    <p>{{post.post}}</P>
+    <img src="{{post.image.url}}" alt="post image">
+    <small>{{post.date}}</small>
+{% endfor %}
+{% endblock %}
