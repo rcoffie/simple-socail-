@@ -95,8 +95,6 @@ def profile(request):
     return render(request, "account_engine/profile.html")
 
 
-def index(request):
-    return render(request, "index.html")
 
 
 def user_logout(request):

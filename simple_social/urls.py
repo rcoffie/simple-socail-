@@ -23,6 +23,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('account_engine.urls')),
+    path('post/', include('post_engine.urls')),
     path('accounts/',include('django.contrib.auth.urls')),
     #path('accounts/', include('django.contrib.auth.urls')),
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name='account_engine/password_reset/password_reset_form.html'), name ='reset_password'),
