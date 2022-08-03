@@ -1,5 +1,6 @@
 {% extends 'base2.html' %}
-
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -24,6 +25,20 @@
       </div>
 
       <input class="form-control mb-4" type="text" placeholder="What's on your mind" aria-label="Disabled input example" >
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <form class="" method="POST" enctype="multipart/form-data" >
+           {% csrf_token %}
+
+            {{form|crispy}}
+
+            <input type="submit" name="" value="Post" class="btn btn-success mt-4">
+          </form>
+        </div>
+      </div>
+
+
 
       {% if posts %}
       {% for each in posts %}
