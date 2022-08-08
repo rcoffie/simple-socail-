@@ -6,6 +6,14 @@
 
 <div class="container p-4">
   <div class="row m-4">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
+      <strong>{{message}}!</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
     <div class="col-md-2">
       <div class="d-grid gap-2">
         <button class="btn btn-success" type="button">FEED</button>
@@ -38,19 +46,19 @@
         </div>
       </div>
 
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
 
 
       {% if posts %}
       {% for each in posts %}
       <div class="card mb-4" >
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <strong>{{message}}!</strong>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-        {% endif %}
+
         <div class="card-body">
           <h5 class="card-title">Card title</h5>
           <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>

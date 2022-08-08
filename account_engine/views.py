@@ -17,14 +17,13 @@ from django.utils.http import urlsafe_base64_encode
 
 from account_engine.forms import ProfileEditForm, RegistrationForm, UserEditForm
 from account_engine.models import Profile
-from django.contrib import messages
 
 # Create your views here.
 
 
 def user_registration(request):
     if request.user.is_authenticated:
-        return redirect("profile")
+        return redirect("index")
     else:
         if request.method == "POST":
             form = RegistrationForm(request.POST)
@@ -42,7 +41,7 @@ def user_registration(request):
 
 def user_login(request):
     if request.user.is_authenticated:
-        return redirect("profile")
+        return redirect("index")
     else:
         if request.method == "POST":
             form = AuthenticationForm(request, data=request.POST)
@@ -52,7 +51,7 @@ def user_login(request):
                 user = authenticate(username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    
+                    messages.info(request, f"HI! {username}.")
                     return redirect("index")
                 else:
                     messages.error(request, "invalid username or password ")
@@ -76,7 +75,7 @@ def edit_profile(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, 'Profile updated ')
+            # Todo will write a alert message here in future
             return redirect(request, "account_engine/profile")
         else:
             user_form = UserEditForm(instance=request.user)
