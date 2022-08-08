@@ -20,10 +20,19 @@
         {{form|crispy}}
         <input class="btn btn-success" type="submit" name="" value="Login">
       </form>
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{message}}!</strong> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
       <div class="alert alert-primary" role="alert">
   Don't have an Account ? create on <a href="{% url 'user_registration' %}" class="alert-link text-decoration-none">SignUp</a>. Give it a click if you like.
   forget password <a href="{% url 'reset_password' %}" class="alert-link text-decoration-none">Reset Password</a>
 </div>
+
     </div>
   </div>
 </div>
