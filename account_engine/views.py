@@ -15,8 +15,9 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
-from account_engine.forms import ProfileEditForm, RegistrationForm, UserEditForm
+from account_engine.forms import ProfileEditForm, RegistrationForm, UserEditForm, SignUpForm
 from account_engine.models import Profile
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 
@@ -94,6 +95,27 @@ def profile(request):
 
     return render(request, "account_engine/profile.html")
 
+#
+# def signup(request):
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('login')
+#     else:
+#         form = UserCreationForm()
+#     return render(request, 'account_engine/signup.html',{'form':form})
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('user_login')
+    else:
+        form = SignUpForm()
+    return render(request,'account_engine/signup.html', {'form':form})
 
 
 

@@ -22,8 +22,12 @@
       <form class="mb-2" action="" method="post" >
         {% csrf_token %}
         {{form|crispy}}
+        {% for error in field.errors %}
+             {{error}}
+        {% endfor %}
+
         <input class="btn btn-primary" type="submit" name="" value="Register">
-        
+
       </form>
 
 
