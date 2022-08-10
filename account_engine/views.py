@@ -18,26 +18,26 @@ from django.utils.http import urlsafe_base64_encode
 from account_engine.forms import ProfileEditForm, RegistrationForm, UserEditForm, SignUpForm
 from account_engine.models import Profile
 from django.contrib.auth.forms import UserCreationForm
-
+from django.contrib.auth import login , authenticate
 # Create your views here.
 
 
-def user_registration(request):
-    if request.user.is_authenticated:
-        return redirect("index")
-    else:
-        if request.method == "POST":
-            form = RegistrationForm(request.POST)
-            if form.is_valid():
-                new_user = form.save()
-                Profile.objects.create(user=new_user)
-                messages.success(request, "Account Created")
-                return redirect("user_login")
-            else:
-                form = RegistrationForm()
-        else:
-            form = RegistrationForm()
-    return render(request, "account_engine/registration.html", {"form": form})
+# def user_registration(request):
+#     if request.user.is_authenticated:
+#         return redirect("index")
+#     else:
+#         if request.method == "POST":
+#             form = RegistrationForm(request.POST)
+#             if form.is_valid():
+#                 new_user = form.save()
+#                 Profile.objects.create(user=new_user)
+#                 messages.success(request, "Account Created")
+#                 return redirect("user_login")
+#             else:
+#                 form = RegistrationForm()
+#         else:
+#             form = RegistrationForm()
+#     return render(request, "account_engine/registration.html", {"form": form})
 
 
 def user_login(request):
@@ -107,11 +107,16 @@ def profile(request):
 #     return render(request, 'account_engine/signup.html',{'form':form})
 
 
-def signup(request):
+def user_registration(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_user = form.save()
+            Profile.objects.create(user=new_user)
+            username = form.cleaned_data.get('username')
+            password1 = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password1)
+            login(request, user)
             return redirect('user_login')
     else:
         form = SignUpForm()
