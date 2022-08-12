@@ -1,7 +1,7 @@
 {% extends 'base2.html' %}
 {% load widget_tweaks %}
 {% load crispy_forms_tags %}
-
+ {% load humanize %}
 {% block content %}
 
 <div class="container p-4">
@@ -46,18 +46,27 @@
         </div>
       </div>
 
-  
+
 
       {% if posts %}
       {% for each in posts %}
       <div class="card mb-4" >
 
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <div class=" clearfix">
+
+
+            <p class="float-start">  <small class="text-primary"><strong><img src="{{each.user.profile.photo.url}}" width="25" height="25" class="img-fluid rounded" alt="..."> {{each.user}}</strong> </small> </p>
+            <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link float-end"> <i class="bi bi-trash"></i></a>
+            <a href="{% url 'edit_post' each.id %}" class="card-link float-end"><i class="bi bi-pencil-square"></i></a>
+            <p class="float-end">  <small class="text-primary"><strong>{{each.date| naturaltime}} </strong> </small> </p>
+          </div>
+
+
           <p class="card-text">{{each.post}}</p>
-          <a href="{% url 'delete_post' each.id %}" class="card-link">Delete</a>
-          <a href="{% url 'edit_post' each.id %}" class="card-link">Edit Post</a>
+          <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link "> <i class="bi bi-trash"></i></a>
+          <a href="{% url 'edit_post' each.id %}" class="card-link"><i class="bi bi-pencil-square"></i></a>
+
         </div>
       </div>
       {% endfor %}
