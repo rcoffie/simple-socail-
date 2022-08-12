@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
-from post_engine.forms import PostForm
-from post_engine.models import Post
+from django.shortcuts import render, redirect, get_object_or_404
+from post_engine.forms import PostForm, CommentForm
+from post_engine.models import Post, Comment
 from django.contrib import messages
 # Create your views here.
 def index(request):
     posts = Post.objects.all()
+    c_form = CommentForm()
     form = PostForm()
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -13,7 +14,8 @@ def index(request):
             save_form.user = request.user
             save_form.save()
             return redirect('index')
-    context = {'posts':posts,'form':form,}
+
+    context = {'posts':posts,'form':form,'c_form':c_form,}
     return render(request, "index.html", context)
 
 
@@ -52,6 +54,25 @@ def delete_post(request, pk):
     return redirect('index')
 
 def post_detail(request, pk):
-    posts = PostInfo.objects.filter(pk=pk)
-    context = {'posts':posts}
+    posts = Post.objects.get(pk=pk)
+    comments = get_object_or_404(Comment, post=posts)
+
+    context = {'posts':posts,'comments':comments}
     return render(request, 'post_engine/post_detail.html', context)
+
+
+
+def post_comment(request, pk):
+    posts = Post.object.get(pk=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            save_form = form.save(commit=False)
+            body = request.POST['body']
+            user = request.user
+            save_form = Comment.objects.create(user=user,posts=post,)
+            save_form.save()
+            return redirect('index')
+    else:
+        form = CommentForm()
+    return render(request, 'post_engine/post_comment.html',{'form':form})
