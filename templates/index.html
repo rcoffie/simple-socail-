@@ -65,7 +65,13 @@
 
           <p class="card-text">{{each.post}}</p>
           <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link "> <i class="bi bi-trash"></i></a>
-          <a href="{% url 'edit_post' each.id %}" class="card-link"><i class="bi bi-pencil-square"></i></a>
+          <a href="{% url 'post_detail' each.id %}" class="card-link"><i class="bi bi-chat"></i></a>
+
+          <form class="" action="{% url 'post_comment' %}" method="POST">
+            {% csrf_token %}
+            {{c_form| crispy}}
+            <input type="submit" name=""  class="btn btn-success" value="comment">
+          </form>
 
         </div>
       </div>
