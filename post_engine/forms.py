@@ -1,9 +1,9 @@
 from django import forms
-from post_engine.models import PostInfo
+from post_engine.models import Post
 
 
-class PostInfoForm(forms.ModelForm):
+class PostForm(forms.ModelForm):
     image = forms.ImageField(required=False)
     class Meta:
-        model = PostInfo
+        model = Post
         fields = ['post', 'image']
