@@ -1,5 +1,5 @@
 from django.contrib import admin
-from post_engine.models import PostInfo
+from post_engine.models import Post
 
 # Register your models here.
-admin.site.register(PostInfo)
+admin.site.register(Post)

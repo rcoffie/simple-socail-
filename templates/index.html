@@ -46,14 +46,7 @@
         </div>
       </div>
 
-      {% if messages %}
-      {% for message in messages %}
-      <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
-        {{ message }}
-      </div>
-      {% endfor %}
-      {% endif %}
-
+  
 
       {% if posts %}
       {% for each in posts %}
@@ -63,8 +56,8 @@
           <h5 class="card-title">Card title</h5>
           <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
           <p class="card-text">{{each.post}}</p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
+          <a href="{% url 'delete_post' each.id %}" class="card-link">Delete</a>
+          <a href="{% url 'edit_post' each.id %}" class="card-link">Edit Post</a>
         </div>
       </div>
       {% endfor %}
