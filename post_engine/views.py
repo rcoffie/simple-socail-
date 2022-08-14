@@ -61,6 +61,7 @@ def delete_post(request, pk):
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
     comments = Comment.objects.filter(post=post)
+    total_comments = comments.count()
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -74,22 +75,26 @@ def post_detail(request, pk):
     else:
         form = CommentForm()
 
-    context = {'post':post,'comments':comments,'form':form,}
+    context = {'post':post,'comments':comments,'form':form,'total_comments':total_comments,}
     return render(request, 'post_engine/post_detail.html', context)
 
 
-
-def post_comment(request, pk):
-    posts = Post.objects.get(pk=pk)
+def edit_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
     if request.method == 'POST':
-        form = CommentForm(request.POST)
+        form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
-            save_form = form.save(commit=False)
-            body = request.POST['body']
-            user = request.user
-            save_form = Comment.objects.create(body=body,user=user,post=posts,)
-            save_form.save()
-            return redirect('index')
+            form.save()
+            messages.success(request, 'comment edited')
+            return HttpResponseRedirect(reverse("edit_comment", args=[comment.id]))
     else:
-        form = CommentForm()
-    return render(request, 'post_engine/post_comment.html',{'form':form})
+        form = CommentForm(instance=comment)
+    context = {'form':form,}
+    return render( request, 'post_engine/edit_comment.html',context)
+
+
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    messages.warning(request, 'comment deleted')
+    return redirect('index')
