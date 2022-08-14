@@ -10,7 +10,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import PasswordChangeView, PasswordResetDoneView
 from django.core.mail import BadHeaderError, send_mail
 from django.db.models.query_utils import Q
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -19,6 +19,7 @@ from account_engine.forms import ProfileEditForm, RegistrationForm, UserEditForm
 from account_engine.models import Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login , authenticate
+from post_engine .models import Post
 # Create your views here.
 
 
@@ -91,7 +92,14 @@ def edit_profile(request):
     )
 
 
-def profile(request):
+def profile(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    user = profile.user
+    posts = Post.objects.filter(user=user).order_by('-date')
+    context = {'user':user,'posts':posts,'profile':profile,}
+
+    return render(request, 'account_engine/profile.html',context)
+
 
     return render(request, "account_engine/profile.html")
 
