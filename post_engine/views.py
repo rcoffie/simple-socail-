@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 from post_engine.forms import PostForm, CommentForm
 from post_engine.models import Post, Comment
 from django.contrib import messages
+from django.urls import reverse, reverse_lazy
 # Create your views here.
 def index(request):
     posts = Post.objects.all()
@@ -60,8 +61,20 @@ def delete_post(request, pk):
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
     comments = Comment.objects.filter(post=post)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            save_form = form.save(commit=False)
+            body = request.POST['body']
+            user = request.user
+            save_form = Comment.objects.create(body=body,user=user,post=post)
+            save_form.save()
+            messages.success(request, 'comment added')
+            return HttpResponseRedirect(reverse("post_detail", args=[post.id]))
+    else:
+        form = CommentForm()
 
-    context = {'post':post,'comments':comments}
+    context = {'post':post,'comments':comments,'form':form,}
     return render(request, 'post_engine/post_detail.html', context)
 
 
