@@ -63,7 +63,7 @@
           </div>
 
 
-          <p class="card-text">{{each.post}}</p>
+          <p class="card-text"> <a  class="text-decoration-none text-secondary" href="{% url 'post_detail' each.id %}"> {{each.post}}  </a> </p>
           <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link "> <i class="bi bi-trash"></i></a>
           <a href="{% url 'post_detail' each.id %}" class="card-link"><i class="bi bi-chat"></i></a>
 
@@ -73,10 +73,7 @@
             <input type="submit" name=""  class="btn btn-success" value="comment">
           </form>
         </div>
-        {% for each in comments %}
-          <p class="shadow p-3 m-3 bg-body rounded"> {{each.body}}</p>
-          {% endfor %}
-          {{comments}}
+
       </div>
       {% endfor %}
       {% endif %}

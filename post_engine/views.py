@@ -19,12 +19,7 @@ def index(request):
     return render(request, "index.html", context)
 
 
-def index_comment(request, pk):
-    post = Post.objects.get(pk=pk)
-    comments = Comment.objects.get(post=post)
 
-    context ={'post':post,'comments':comments,}
-    return render(request, 'index.html',context)
 
 
 
@@ -63,10 +58,10 @@ def delete_post(request, pk):
     return redirect('index')
 
 def post_detail(request, pk):
-    posts = Post.objects.get(pk=pk)
-    comments = get_object_or_404(Comment, post=posts)
+    post = Post.objects.get(pk=pk)
+    comments = Comment.objects.filter(post=post)
 
-    context = {'posts':posts,'comments':comments}
+    context = {'post':post,'comments':comments}
     return render(request, 'post_engine/post_detail.html', context)
 
 

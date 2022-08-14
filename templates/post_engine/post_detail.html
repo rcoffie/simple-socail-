@@ -1,8 +1,18 @@
 {% extends 'base2.html' %}
+
 {% block content %}
-{% for post in posts %}
-    <p>{{post.post}}</P>
-    <img src="{{post.image.url}}" alt="post image">
-    <small>{{post.date}}</small>
-{% endfor %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      {{post.post}}
+
+      <hr>
+      {% for each in comments %}
+        {{each.body}}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
 {% endblock %}
