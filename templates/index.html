@@ -53,7 +53,7 @@
           <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link "> <i class="bi bi-trash"></i></a>
           <a href="{% url 'post_detail' each.id %}" class="card-link"><i class="bi bi-chat"></i></a>
 
-          <form class="" action="{% url 'post_comment' each.id %}" method="POST">
+          <form class="" action="{% url 'post_detail' each.id %}" method="POST">
             {% csrf_token %}
             {{c_form| crispy}}
             <input type="submit" name=""  class="btn btn-success" value="comment">

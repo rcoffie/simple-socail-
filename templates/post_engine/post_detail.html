@@ -41,7 +41,7 @@
 
 
                 <p class="float-start">  <small class="text-primary"><strong><img src="{{each.user.profile.photo.url}}" width="25" height="25" class="img-fluid rounded" alt="..."> {{each.user}}</strong> </small> </p>
-                <a  onclick="return confirm('Are you sure?')"  href=""  class="card-link float-end"> <i class="bi bi-trash"></i></a>
+                <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_comment' each.id %}"  class="card-link float-end"> <i class="bi bi-trash"></i></a>
                 <a href="{% url 'edit_comment' each.id %}" class="card-link float-end"><i class="bi bi-pencil-square"></i></a>
                 <p class="float-end">  <small class="text-primary"><strong>{{each.date| naturaltime}} </strong> </small> </p>
               </div>

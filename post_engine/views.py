@@ -90,3 +90,10 @@ def edit_comment(request, pk):
         form = CommentForm(instance=comment)
     context = {'form':form,}
     return render( request, 'post_engine/edit_comment.html',context)
+
+
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    messages.warning(request, 'comment deleted')
+    return redirect('index')
