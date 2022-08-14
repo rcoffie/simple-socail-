@@ -29,6 +29,7 @@
         <div class="card-body">
            {{post.post}}
            <hr>
+           {{total_comments}}
           <form class="" action="#" method="POST">
             {% csrf_token %}
             {{ form| crispy}}

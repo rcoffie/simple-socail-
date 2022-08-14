@@ -61,6 +61,7 @@ def delete_post(request, pk):
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
     comments = Comment.objects.filter(post=post)
+    total_comments = comments.count()
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -74,7 +75,7 @@ def post_detail(request, pk):
     else:
         form = CommentForm()
 
-    context = {'post':post,'comments':comments,'form':form,}
+    context = {'post':post,'comments':comments,'form':form,'total_comments':total_comments,}
     return render(request, 'post_engine/post_detail.html', context)
 
 
