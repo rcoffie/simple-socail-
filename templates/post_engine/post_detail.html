@@ -1,8 +1,71 @@
 {% extends 'base2.html' %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+ {% load humanize %}
 {% block content %}
-{% for post in posts %}
-    <p>{{post.post}}</P>
-    <img src="{{post.image.url}}" alt="post image">
-    <small>{{post.date}}</small>
-{% endfor %}
+
+<div class="container p-4">
+  <div class="row m-4">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
+      <strong>{{message}}!</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% include 'partails/left_panel.html' %}
+    <div class="col-md-6 ">
+      <div class="mb-4  text-center">
+        <button type="button" class="btn btn-light" data-bs-toggle="button" autocomplete="off">Toggle button</button>
+        <button type="button" class="btn btn-light active" data-bs-toggle="button" autocomplete="off" aria-pressed="true">Active toggle button</button>
+        <button type="button" class="btn btn-light active" data-bs-toggle="button" autocomplete="off" aria-pressed="true">Active toggle button</button>
+
+      </div>
+
+
+
+      <div class="card mb-4">
+        <div class="card-body">
+
+        </div>
+      </div>
+
+
+
+      {% if posts %}
+      {% for each in posts %}
+      <div class="card mb-4" >
+
+        <div class="card-body">
+          <div class=" clearfix">
+
+
+            <p class="float-start">  <small class="text-primary"><strong><img src="{{each.user.profile.photo.url}}" width="25" height="25" class="img-fluid rounded" alt="..."> {{each.user}}</strong> </small> </p>
+            <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link float-end"> <i class="bi bi-trash"></i></a>
+            <a href="{% url 'edit_post' each.id %}" class="card-link float-end"><i class="bi bi-pencil-square"></i></a>
+            <p class="float-end">  <small class="text-primary"><strong>{{each.date| naturaltime}} </strong> </small> </p>
+          </div>
+
+
+          <p class="card-text"> <a  class="text-decoration-none text-secondary" href="{% url 'post_detail' each.id %}"> {{each.post}}  </a> </p>
+          <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link "> <i class="bi bi-trash"></i></a>
+          <a href="{% url 'post_detail' each.id %}" class="card-link"><i class="bi bi-chat"></i></a>
+
+          <form class="" action="#" method="POST">
+            {% csrf_token %}
+            {{c_form| crispy}}
+            <input type="submit" name=""  class="btn btn-success" value="comment">
+          </form>
+        </div>
+
+      </div>
+      {% endfor %}
+      {% endif %}
+
+    </div>
+   {% include 'partails/right_panel.html' %}
+  </div>
+</div>
+
 {% endblock %}

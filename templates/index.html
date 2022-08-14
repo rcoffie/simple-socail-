@@ -14,16 +14,7 @@
     </div>
     {% endfor %}
     {% endif %}
-    <div class="col-md-2">
-      <div class="d-grid gap-2">
-        <button class="btn btn-success" type="button">FEED</button>
-        <button class="btn btn-success" type="button">PROFILE</button>
-        <button class="btn btn-success" type="button">EXPLORE</button>
-        <button class="btn btn-success" type="button">LOGOUT</button>
-        <button class="btn btn-success" type="button">Button</button>
-        <a href="{% url 'user_logout' %}" class="btn btn-success" type="button">Button</a>
-      </div>
-    </div>
+    {% include 'partails/left_panel.html' %}
     <div class="col-md-6 ">
       <div class="mb-4  text-center">
         <button type="button" class="btn btn-light" data-bs-toggle="button" autocomplete="off">Toggle button</button>
@@ -63,7 +54,7 @@
           </div>
 
 
-          <p class="card-text">{{each.post}}</p>
+          <p class="card-text"> <a  class="text-decoration-none text-secondary" href="{% url 'post_detail' each.id %}"> {{each.post}}  </a> </p>
           <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link "> <i class="bi bi-trash"></i></a>
           <a href="{% url 'post_detail' each.id %}" class="card-link"><i class="bi bi-chat"></i></a>
 
@@ -73,41 +64,13 @@
             <input type="submit" name=""  class="btn btn-success" value="comment">
           </form>
         </div>
-        {% for each in comments %}
-          <p class="shadow p-3 m-3 bg-body rounded"> {{each.body}}</p>
-          {% endfor %}
-          {{comments}}
+
       </div>
       {% endfor %}
       {% endif %}
 
     </div>
-    <div class="col-md-3 ">
-    <input class="form-control" type="text" placeholder="Search" input here..." aria-label="readonly input example" >
-    <div class="card">
-      <div class="card-body">
-        This is some text within a card body.
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        This is some text within a card body.
-      </div>
-    </div>
-
-    <div class="card">
-  <div class="card-body">
-    This is some text within a card body.
-  </div>
-</div>
-
-<div class="card">
-<div class="card-body">
-This is some text within a card body.
-</div>
-</div>
-    </div>
+   {% include 'partails/right_panel.html' %}
   </div>
 </div>
 
