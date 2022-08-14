@@ -20,49 +20,44 @@
         <button type="button" class="btn btn-light" data-bs-toggle="button" autocomplete="off">Toggle button</button>
         <button type="button" class="btn btn-light active" data-bs-toggle="button" autocomplete="off" aria-pressed="true">Active toggle button</button>
         <button type="button" class="btn btn-light active" data-bs-toggle="button" autocomplete="off" aria-pressed="true">Active toggle button</button>
-
       </div>
-
-
-
       <div class="card mb-4">
         <div class="card-body">
-
         </div>
       </div>
-
-
-
-      {% if posts %}
-      {% for each in posts %}
       <div class="card mb-4" >
-
         <div class="card-body">
-          <div class=" clearfix">
-
-
-            <p class="float-start">  <small class="text-primary"><strong><img src="{{each.user.profile.photo.url}}" width="25" height="25" class="img-fluid rounded" alt="..."> {{each.user}}</strong> </small> </p>
-            <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link float-end"> <i class="bi bi-trash"></i></a>
-            <a href="{% url 'edit_post' each.id %}" class="card-link float-end"><i class="bi bi-pencil-square"></i></a>
-            <p class="float-end">  <small class="text-primary"><strong>{{each.date| naturaltime}} </strong> </small> </p>
-          </div>
-
-
-          <p class="card-text"> <a  class="text-decoration-none text-secondary" href="{% url 'post_detail' each.id %}"> {{each.post}}  </a> </p>
-          <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link "> <i class="bi bi-trash"></i></a>
-          <a href="{% url 'post_detail' each.id %}" class="card-link"><i class="bi bi-chat"></i></a>
-
+           {{post.post}}
+           <hr>
           <form class="" action="#" method="POST">
             {% csrf_token %}
-            {{c_form| crispy}}
+            {{ form| crispy}}
             <input type="submit" name=""  class="btn btn-success" value="comment">
           </form>
+          {% for each  in comments %}
+          <div class="card m-2 shadow-lg p-3 mb-5 bg-body rounded" >
+            <div class="card-body ">
+              <div class=" clearfix">
+
+
+                <p class="float-start">  <small class="text-primary"><strong><img src="{{each.user.profile.photo.url}}" width="25" height="25" class="img-fluid rounded" alt="..."> {{each.user}}</strong> </small> </p>
+                <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link float-end"> <i class="bi bi-trash"></i></a>
+                <a href="{% url 'edit_post' each.id %}" class="card-link float-end"><i class="bi bi-pencil-square"></i></a>
+                <p class="float-end">  <small class="text-primary"><strong>{{each.date| naturaltime}} </strong> </small> </p>
+              </div>
+
+              <h5 class="card-title">Card title</h5>
+              <h6 class="card-subtitle mb-2 text-muted"></h6>
+              <p class="card-text">{{each.body}}</p>
+              <a href="#" class="card-link"></a>
+              <a href="#" class="card-link"></a>
+            </div>
+          </div>
+          {% endfor %}
+
         </div>
 
       </div>
-      {% endfor %}
-      {% endif %}
-
     </div>
    {% include 'partails/right_panel.html' %}
   </div>
