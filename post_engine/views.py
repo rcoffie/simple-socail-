@@ -76,20 +76,3 @@ def post_detail(request, pk):
 
     context = {'post':post,'comments':comments,'form':form,}
     return render(request, 'post_engine/post_detail.html', context)
-
-
-
-def post_comment(request, pk):
-    posts = Post.objects.get(pk=pk)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            save_form = form.save(commit=False)
-            body = request.POST['body']
-            user = request.user
-            save_form = Comment.objects.create(body=body,user=user,post=posts,)
-            save_form.save()
-            return redirect('index')
-    else:
-        form = CommentForm()
-    return render(request, 'post_engine/post_comment.html',{'form':form})
