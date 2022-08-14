@@ -14,16 +14,7 @@
     </div>
     {% endfor %}
     {% endif %}
-    <div class="col-md-2">
-      <div class="d-grid gap-2">
-        <button class="btn btn-success" type="button">FEED</button>
-        <button class="btn btn-success" type="button">PROFILE</button>
-        <button class="btn btn-success" type="button">EXPLORE</button>
-        <button class="btn btn-success" type="button">LOGOUT</button>
-        <button class="btn btn-success" type="button">Button</button>
-        <a href="{% url 'user_logout' %}" class="btn btn-success" type="button">Button</a>
-      </div>
-    </div>
+    {% include 'partails/left_panel.html' %}
     <div class="col-md-6 ">
       <div class="mb-4  text-center">
         <button type="button" class="btn btn-light" data-bs-toggle="button" autocomplete="off">Toggle button</button>
@@ -79,32 +70,7 @@
       {% endif %}
 
     </div>
-    <div class="col-md-3 ">
-    <input class="form-control" type="text" placeholder="Search" input here..." aria-label="readonly input example" >
-    <div class="card">
-      <div class="card-body">
-        This is some text within a card body.
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        This is some text within a card body.
-      </div>
-    </div>
-
-    <div class="card">
-  <div class="card-body">
-    This is some text within a card body.
-  </div>
-</div>
-
-<div class="card">
-<div class="card-body">
-This is some text within a card body.
-</div>
-</div>
-    </div>
+   {% include 'partails/right_panel.html' %}
   </div>
 </div>
 
