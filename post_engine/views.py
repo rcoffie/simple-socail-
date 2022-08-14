@@ -19,6 +19,15 @@ def index(request):
     return render(request, "index.html", context)
 
 
+def index_comment(request, pk):
+    post = Post.objects.get(pk=pk)
+    comments = Comment.objects.get(post=post)
+
+    context ={'post':post,'comments':comments,}
+    return render(request, 'index.html',context)
+
+
+
 # def create_post(request):
 #     form = PostInfoForm()
 #     if request.POST:
@@ -63,14 +72,14 @@ def post_detail(request, pk):
 
 
 def post_comment(request, pk):
-    posts = Post.object.get(pk=pk)
+    posts = Post.objects.get(pk=pk)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             save_form = form.save(commit=False)
             body = request.POST['body']
             user = request.user
-            save_form = Comment.objects.create(user=user,posts=post,)
+            save_form = Comment.objects.create(body=body,user=user,post=posts,)
             save_form.save()
             return redirect('index')
     else:
