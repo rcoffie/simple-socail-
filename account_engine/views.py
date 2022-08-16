@@ -79,8 +79,17 @@ def edit_profile(request):
 def profile(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
     user = profile.user
+    followers = profile.followers.all()
+    total_followers = followers.count()
     posts = Post.objects.filter(user=user).order_by('-date')
-    context = {'user':user,'posts':posts,'profile':profile,}
+    if total_followers == 0:
+        is_follower = False
+    for follower in followers:
+        if follower == request.user:
+            is_follower =True
+        else:
+            is_follower = False
+    context = {'user':user,'posts':posts,'profile':profile,'followers':followers,'total_followers':total_followers,'is_follower':is_follower}
 
     return render(request, 'account_engine/profile.html',context)
 
@@ -135,3 +144,14 @@ def password_change(request):
     return render(
         request, "account_engine/password_reset/password_change.html", {"form": form}
     )
+
+
+def add_follower(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    profile.followers.add(request.user)
+    return redirect('profile', pk=profile.pk)
+
+def remove_follower(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    profile.followers.remove(request.user)
+    return redirect('profile', pk=profile.pk)

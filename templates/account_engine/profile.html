@@ -14,13 +14,27 @@
     <div class=" clearfix">
       <img src="{{profile.photo.url}}" class="rounded-circle mx-auto d-block float-start" alt=" profile image " width="100" height="100" >
 
+      {% if user != request.user %}
+      {% if is_follower %}
+      <form class="" action="{% url 'remove_follower' profile.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-primary float-end"> <i class="bi bi-plus"></i> following </button>
+      </form>
 
-      <button type="button" class="btn btn-outline-primary float-end"> <i class="bi bi-plus"></i> follow</button>
+      {%else%}
+      <form class="" action="{% url 'add_follower' profile.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-primary float-end"> <i class="bi bi-plus"></i> follow</button>
+      </form>
+
+      {% endif %}
+
+      {% endif %}
     </div>
     <h5 class="card-title"> {{user.firstname }} {{user.last_name }} </h5>
 
     <p>  <small class="text-muted">
-      {{user.username}}
+      {{user.username}} <br>Followers: {{total_followers}}
     </small>
 </p>
     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>

@@ -10,6 +10,8 @@ class Post(models.Model):
     image = models.ImageField(upload_to = 'post_images', blank=True,null=True)
     date = models.DateTimeField(auto_now_add=True)
 
+    ordering = ['-date']
+
     def __str__(self):
         return self.user.username
 
