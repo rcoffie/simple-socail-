@@ -3,36 +3,30 @@
 {% block content %}
 
 <div class="container">
-  <div class="row m-2 p-2">
+  <div class="row">
+    <div class="col-md-6 m-auto">
+      <button type="button" name="button">back to feed</button>
+      <div class="card">
+  <div class="card-header">
+    Featured
+  </div>
+  <div class="card-body">
+    <div class=" clearfix">
+      <img src="{{profile.photo.url}}" class="rounded-circle mx-auto d-block float-start" alt=" profile image " width="100" height="100" >
 
-    <div class="col-md-7">
 
-      <div class="card mb-3">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img src="{{request.user.profile.photo.url}}" class="img-fluid rounded-start" alt="...">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">{{request.user.username|capfirst}}</h5>
-              {% if request.user.profile.bio %}
-              <p class="card-text">{{request.user.profile.bio}}</p>
-              {% endif %}
-              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-              <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <button type="button" class="btn btn-outline-primary float-end"> <i class="bi bi-plus"></i> follow</button>
     </div>
+    <h5 class="card-title"> {{user.firstname }} {{user.last_name }} </h5>
 
-<div class="col-md-3">
-  <ul class="list-group">
-    <li class="list-group-item active" aria-current="true">An active item</li>
-    <a href="{% url 'password_change2' %}" class="list-group-item">Password Change</a>
-    <li class="list-group-item">A fourth item</li>
-    <li class="list-group-item">And a fifth one</li>
-  </ul>
+    <p>  <small class="text-muted">
+      {{user.username}}
+    </small>
+</p>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
     </div>
   </div>
 </div>
