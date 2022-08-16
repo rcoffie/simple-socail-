@@ -9,6 +9,8 @@ urlpatterns = [
     path('profile/<int:pk>/',views.profile,name="profile"),
     path('user-logout/',views.user_logout, name="user_logout"),
     path('password-change2/',views.password_change, name="password_change2"),
+    path('add-follower/<int:pk>/',views.add_follower, name='add_follower'),
+    path('remove-follwer/<int:pk>/',views.remove_follower, name='remove_follower')
 
 
 
