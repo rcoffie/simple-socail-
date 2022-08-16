@@ -23,22 +23,6 @@ from post_engine .models import Post
 # Create your views here.
 
 
-# def user_registration(request):
-#     if request.user.is_authenticated:
-#         return redirect("index")
-#     else:
-#         if request.method == "POST":
-#             form = RegistrationForm(request.POST)
-#             if form.is_valid():
-#                 new_user = form.save()
-#                 Profile.objects.create(user=new_user)
-#                 messages.success(request, "Account Created")
-#                 return redirect("user_login")
-#             else:
-#                 form = RegistrationForm()
-#         else:
-#             form = RegistrationForm()
-#     return render(request, "account_engine/registration.html", {"form": form})
 
 
 def user_login(request):
