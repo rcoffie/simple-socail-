@@ -35,9 +35,6 @@ class SignUpForm(UserCreationForm):
 
 
 
-
-
-
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
@@ -47,4 +44,4 @@ class UserEditForm(forms.ModelForm):
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ("bio", "location", "birth_date","photo")
+        fields = ("bio", "location", "birth_date","photo","location",)

@@ -9,6 +9,7 @@ class Post(models.Model):
     post = models.TextField()
     image = models.ImageField(upload_to = 'post_images', blank=True,null=True)
     date = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
 
     ordering = ['-date']
 
