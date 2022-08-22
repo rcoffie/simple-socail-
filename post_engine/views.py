@@ -62,6 +62,9 @@ def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
     comments = Comment.objects.filter(post=post)
     total_comments = comments.count()
+    is_liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        is_liked = True
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -75,7 +78,7 @@ def post_detail(request, pk):
     else:
         form = CommentForm()
 
-    context = {'post':post,'comments':comments,'form':form,'total_comments':total_comments,}
+    context = {'post':post,'comments':comments,'form':form,'total_comments':total_comments,'is_liked':is_liked,}
     return render(request, 'post_engine/post_detail.html', context)
 
 
@@ -98,3 +101,16 @@ def delete_comment(request, pk):
     comment.delete()
     messages.warning(request, 'comment deleted')
     return redirect('index')
+
+def like(request, pk):
+    post = get_object_or_404(Post,pk=request.POST.get('post_id'))
+    is_liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+    else:
+        post.likes.add(request.user)
+        is_liked =True
+    print(post)
+
+    return HttpResponseRedirect(reverse("post_detail", args=[post.id]))
