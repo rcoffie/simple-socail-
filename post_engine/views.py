@@ -62,6 +62,7 @@ def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
     comments = Comment.objects.filter(post=post)
     total_comments = comments.count()
+
     is_liked = False
     if post.likes.filter(id=request.user.id).exists():
         is_liked = True
@@ -78,7 +79,7 @@ def post_detail(request, pk):
     else:
         form = CommentForm()
 
-    context = {'post':post,'comments':comments,'form':form,'total_comments':total_comments,'is_liked':is_liked,}
+    context = {'post':post,'comments':comments,'form':form,'total_comments':total_comments,'is_liked':is_liked,'total_likes':post.get_total_likes()}
     return render(request, 'post_engine/post_detail.html', context)
 
 
@@ -111,6 +112,5 @@ def like(request, pk):
     else:
         post.likes.add(request.user)
         is_liked =True
-    print(post)
 
     return HttpResponseRedirect(reverse("post_detail", args=[post.id]))

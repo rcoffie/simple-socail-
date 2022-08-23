@@ -28,8 +28,15 @@
       <div class="card mb-4" >
         <div class="card-body">
            {{post.post}}
+           <div class=" clearfix">
+              <span class="float-start">{{total_comments}}</span> <i class="bi bi-chat float-start"> </i>
+
+            <i class="bi bi-heart-fill float-end"></i>
+            <small class="float-end">{{post.get_total_likes}} </small>
+            <br>
+
+           </div>
            <hr>
-           {{total_comments}}
            <form class="" action="{% url 'like' post.id  %}" method="POST">
            {% csrf_token %}
            {% if is_liked %}
@@ -38,6 +45,9 @@
             <button type="submit" value="{{post.id}}" class="btn btn-outline" name="post_id"> <h4> <i class="bi bi-hand-thumbs-up"></i> </h4> </button>
             {% endif %}
            </form>
+
+
+
           <form class="" action="#" method="POST">
             {% csrf_token %}
             {{ form| crispy}}
