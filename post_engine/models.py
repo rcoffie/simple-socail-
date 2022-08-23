@@ -11,6 +11,10 @@ class Post(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
 
+
+    def get_total_likes(self):
+        return self.likes.count()
+
     ordering = ['-date']
 
     def __str__(self):
