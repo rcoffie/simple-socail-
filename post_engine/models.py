@@ -6,6 +6,7 @@ from django.utils.text import slugify
 import uuid
 from datetime import datetime
 now = datetime.now()
+from django.urls import reverse
 # Create your models here.
 
 class Post(models.Model):
@@ -26,13 +27,15 @@ class Post(models.Model):
     def __str__(self):
         return self.user.username
 
-    # def get_absolute_url(self):
-    #     return reverse("post_detail", kwargs={"slug" self.slug})
+
+
+    def get_absolute_url(self):
+        return reverse("post_detail", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.user)  + "-" + slugify(now)
         super().save(*args, **kwargs)
-        if self.slug is None:
+        if not self.slug:
             self.slug = slugify(self.user)  + "-" + slugify(now)
             self.save()
 
