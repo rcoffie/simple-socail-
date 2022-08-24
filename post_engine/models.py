@@ -3,33 +3,40 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
+import uuid
+from datetime import datetime
+now = datetime.now()
+from django.urls import reverse
 # Create your models here.
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.TextField()
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200,  blank=True)
     image = models.ImageField(upload_to = 'post_images', blank=True,null=True)
-    date = models.DateTimeField(auto_now_add=True)
+    created_on =  models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
 
 
     def get_total_likes(self):
         return self.likes.count()
 
-    ordering = ['-date']
+    class Meta:
+        ordering = ['-created_on']
 
     def __str__(self):
         return self.user.username
 
-    # def get_absolute_url(self):
-    #     return reverse("post_detail", kwargs={"slug" self.slug})
+
+
+    def get_absolute_url(self):
+        return reverse("post_detail", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        self.slug = slugify(self.user)  + "-" + slugify(now)
         super().save(*args, **kwargs)
-        if self.slug is None:
-            self.slug = slugify(self.title)
+        if not self.slug:
+            self.slug = slugify(self.user)  + "-" + slugify(now)
             self.save()
 
 class Comment(models.Model):

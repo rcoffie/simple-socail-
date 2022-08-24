@@ -58,8 +58,8 @@ def delete_post(request, pk):
     messages.warning(request,'Post deleted ')
     return redirect('index')
 
-def post_detail(request, pk):
-    post = Post.objects.get(pk=pk)
+def post_detail(request, slug):
+    post = Post.objects.get(slug=slug)
     comments = Comment.objects.filter(post=post)
     total_comments = comments.count()
 
@@ -75,7 +75,7 @@ def post_detail(request, pk):
             save_form = Comment.objects.create(body=body,user=user,post=post)
             save_form.save()
             messages.success(request, 'comment added')
-            return HttpResponseRedirect(reverse("post_detail", args=[post.id]))
+            return HttpResponseRedirect(reverse("post_detail", args=[post.slug]))
     else:
         form = CommentForm()
 
