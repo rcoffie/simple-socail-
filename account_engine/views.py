@@ -81,7 +81,7 @@ def profile(request, pk):
     user = profile.user
     followers = profile.followers.all()
     total_followers = followers.count()
-    posts = Post.objects.filter(user=user).order_by('-date')
+    posts = Post.objects.filter(user=user).order_by('-created_on')
     if total_followers == 0:
         is_follower = False
     for follower in followers:
