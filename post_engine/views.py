@@ -83,14 +83,14 @@ def post_detail(request, slug):
     return render(request, 'post_engine/post_detail.html', context)
 
 
-def edit_comment(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
+def edit_comment(request, slug):
+    comment = get_object_or_404(Comment, slug=slug)
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
             messages.success(request, 'comment edited')
-            return HttpResponseRedirect(reverse("edit_comment", args=[comment.id]))
+            return HttpResponseRedirect(reverse("edit_comment", args=[comment.slug]))
     else:
         form = CommentForm(instance=comment)
     context = {'form':form,}
