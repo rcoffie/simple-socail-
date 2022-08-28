@@ -103,8 +103,8 @@ def delete_comment(request, pk):
     messages.warning(request, 'comment deleted')
     return redirect('index')
 
-def like(request, pk):
-    post = get_object_or_404(Post,pk=request.POST.get('post_id'))
+def like(request, slug):
+    post = get_object_or_404(Post,slug=request.POST.get('post_slug'))
     is_liked = False
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
@@ -113,4 +113,4 @@ def like(request, pk):
         post.likes.add(request.user)
         is_liked =True
 
-    return HttpResponseRedirect(reverse("post_detail", args=[post.id]))
+    return HttpResponseRedirect(reverse("post_detail", args=[post.slug]))
