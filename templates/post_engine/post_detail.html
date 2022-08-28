@@ -60,12 +60,14 @@
 
 
                 <p class="float-start">  <small class="text-primary"><strong><img src="{{each.user.profile.photo.url}}" width="25" height="25" class="img-fluid rounded" alt="..."> {{each.user}}</strong> </small> </p>
+                {% if request.user == each.user %}
                 <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_comment' each.id %}"  class="card-link float-end"> <i class="bi bi-trash"></i></a>
                 <a href="{{each.get_absolute_url}}" class="card-link float-end"><i class="bi bi-pencil-square"></i></a>
+                {% endif %}
                 <p class="float-end">  <small class="text-primary"><strong>{{each.date| naturaltime}} </strong> </small> </p>
               </div>
 
-              <h5 class="card-title">Card title</h5>
+              <!-- <h5 class="card-title">Card title</h5> -->
               <h6 class="card-subtitle mb-2 text-muted"></h6>
               <p class="card-text">{{each.body}}</p>
               <a href="#" class="card-link"></a>
