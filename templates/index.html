@@ -44,7 +44,7 @@
 
             <p class="float-start">  <a class="text-decoration-none" href="{% url 'profile' each.user.profile.pk %}"> <small class="text-primary"><strong><img src="{{each.user.profile.photo.url}}" width="25" height="25" class="img-fluid rounded" alt="...">  <i class="bi bi-at"></i>{{each.user}}  </strong> </small>  </a>  </p>
             <a  onclick="return confirm('Are you sure?')"  href="{% url 'delete_post' each.id %}"  class="card-link float-end"> <i class="bi bi-trash"></i></a>
-            <a href="{% url 'edit_post' each.id %}" class="card-link float-end"><i class="bi bi-pencil-square"></i></a>
+            <a href="{{each.get_absolute_url}}" class="card-link float-end"><i class="bi bi-pencil-square"></i></a>
             <p class="float-end">  <small class="text-primary"><strong>{{each.created_on| naturaltime}} </strong> </small> </p>
           </div>
 
