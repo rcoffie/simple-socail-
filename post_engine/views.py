@@ -38,10 +38,10 @@ def index(request):
 #     return render(request, 'index.html', context)
 
 
-def edit_post(request, pk):
+def edit_post(request, slug):
 
     context = {}
-    post = Post.objects.get(id=pk)
+    post = Post.objects.get(slug=slug)
     form = PostForm(instance=post)
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES, instance=post)
