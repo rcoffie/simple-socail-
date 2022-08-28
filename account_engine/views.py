@@ -4,25 +4,28 @@ from django.contrib.auth.forms import (
     AuthenticationForm,
     PasswordChangeForm,
     PasswordResetForm,
+    UserCreationForm,
 )
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import PasswordChangeView, PasswordResetDoneView
 from django.core.mail import BadHeaderError, send_mail
 from django.db.models.query_utils import Q
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from post_engine.models import Post
 
-from account_engine.forms import ProfileEditForm, RegistrationForm, UserEditForm, SignUpForm
+from account_engine.forms import (
+    ProfileEditForm,
+    RegistrationForm,
+    SignUpForm,
+    UserEditForm,
+)
 from account_engine.models import Profile
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login , authenticate
-from post_engine .models import Post
+
 # Create your views here.
-
-
 
 
 def user_login(request):
@@ -81,20 +84,27 @@ def profile(request, pk):
     user = profile.user
     followers = profile.followers.all()
     total_followers = followers.count()
-    posts = Post.objects.filter(user=user).order_by('-created_on')
+    posts = Post.objects.filter(user=user).order_by("-created_on")
     if total_followers == 0:
         is_follower = False
     for follower in followers:
         if follower == request.user:
-            is_follower =True
+            is_follower = True
         else:
             is_follower = False
-    context = {'user':user,'posts':posts,'profile':profile,'followers':followers,'total_followers':total_followers,'is_follower':is_follower}
+    context = {
+        "user": user,
+        "posts": posts,
+        "profile": profile,
+        "followers": followers,
+        "total_followers": total_followers,
+        "is_follower": is_follower,
+    }
 
-    return render(request, 'account_engine/profile.html',context)
-
+    return render(request, "account_engine/profile.html", context)
 
     return render(request, "account_engine/profile.html")
+
 
 #
 # def signup(request):
@@ -109,20 +119,19 @@ def profile(request, pk):
 
 
 def user_registration(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
             new_user = form.save()
             Profile.objects.create(user=new_user)
-            username = form.cleaned_data.get('username')
-            password1 = form.cleaned_data.get('password1')
+            username = form.cleaned_data.get("username")
+            password1 = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=password1)
             login(request, user)
-            return redirect('user_login')
+            return redirect("user_login")
     else:
         form = SignUpForm()
-    return render(request,'account_engine/signup.html', {'form':form})
-
+    return render(request, "account_engine/signup.html", {"form": form})
 
 
 def user_logout(request):
@@ -149,9 +158,10 @@ def password_change(request):
 def add_follower(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
     profile.followers.add(request.user)
-    return redirect('profile', pk=profile.pk)
+    return redirect("profile", pk=profile.pk)
+
 
 def remove_follower(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
     profile.followers.remove(request.user)
-    return redirect('profile', pk=profile.pk)
+    return redirect("profile", pk=profile.pk)
