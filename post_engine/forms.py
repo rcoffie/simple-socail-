@@ -19,3 +19,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ["body"]
+
+
+class SearchForm(forms.Form):
+    search_user = forms.CharField(label='username', max_length=100)
