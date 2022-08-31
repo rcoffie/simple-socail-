@@ -4,8 +4,10 @@ from django.shortcuts import (HttpResponseRedirect, get_object_or_404,
                               redirect, render)
 from django.urls import reverse, reverse_lazy
 
-from post_engine.forms import CommentForm, PostForm
+from post_engine.forms import CommentForm, PostForm, SearchForm
 from post_engine.models import Comment, Post
+from account_engine.models import Profile
+from django.db.models import Q
 
 # Create your views here.
 
@@ -138,3 +140,15 @@ def like(request, slug):
         is_liked = True
 
     return HttpResponseRedirect(reverse("post_detail", args=[post.slug]))
+
+
+def search_user(request):
+    results = []
+    if request.method == "GET":
+        query = request.GET.get('search')
+        print(query)
+        profile = Profile.objects.filter(
+        Q(user__username__icontains=query)
+        )
+
+    return render(request, 'post_engine/search_user.html',{'profile':profile,})

@@ -1,26 +1,16 @@
 <div class="col-md-3 ">
-  <input class="form-control" type="text" placeholder="Search" input here..." aria-label="readonly input example" >
-  <div class="card">
-    <div class="card-body">
-      This is some text within a card body.
-    </div>
-  </div>
 
-  <div class="card">
-    <div class="card-body">
-      This is some text within a card body.
-    </div>
-  </div>
 
-  <div class="card">
-    <div class="card-body">
-      This is some text within a card body.
-    </div>
-  </div>
-  
-  <div class="card">
-    <div class="card-body">
-      This is some text within a card body.
-    </div>
-  </div>
+    <form class="form-inline" action="{% url 'search_user' %}" method="GET">
+      <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">@</span>
+            </div>
+            <input  name="search" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+            <button style="border: none; background-color: transparent; box-shadow: none" type="submit"><i class="bi bi-search"></i></button>
+          </div>
+
+    </form>
+
+
 </div>
