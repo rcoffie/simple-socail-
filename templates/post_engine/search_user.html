@@ -1,0 +1,28 @@
+{% extends 'base2.html' %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+ {% load humanize %}
+{% block content %}
+
+<div class="container p-4">
+
+  <div class="row m-4">
+
+    <!-- alert message  -->
+    {% include 'partails/alert_message.html' %}
+     <!-- Left panel  -->
+    {% include 'partails/left_panel.html' %}
+    <div class="col-md-6 ">
+      {% for each in profile %}
+      <div class="row justify-content-center mt-3 ">
+        <div class="col-md-5 col-sm-12 border-bottom position-realtive">
+          <p><a style="text-decoration:none;" href="{% url 'profile' each.id %}"> @{{each.user}} </a></p>
+        </div>
+      </div>
+      {% endfor%}
+    </div>
+   {% include 'partails/right_panel.html' %}
+  </div>
+</div>
+
+{% endblock %}
