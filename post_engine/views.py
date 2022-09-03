@@ -146,7 +146,6 @@ def search_user(request):
     results = []
     if request.method == "GET":
         query = request.GET.get('search')
-        print(query)
         profile = Profile.objects.filter(
         Q(user__username__icontains=query)
         )
