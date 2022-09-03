@@ -17,6 +17,7 @@
       <div class="row justify-content-center mt-3 ">
         <div class="col-md-5 col-sm-12 border-bottom position-realtive">
           <p><a style="text-decoration:none;" href="{% url 'profile' each.id %}"> @{{each.user}} </a></p>
+          <p>{{each.followers.all.count}}</p>
         </div>
       </div>
       {% endfor%}
