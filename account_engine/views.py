@@ -165,3 +165,9 @@ def remove_follower(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
     profile.followers.remove(request.user)
     return redirect("profile", pk=profile.pk)
+
+def followers_list(request, pk):
+    profile = Profile.objects.get(pk=pk)
+    followers = profile.followers.all()
+    context = {'profile':profile, 'followers':followers,}
+    return render(request, 'account_engine/followers_list.html',context)

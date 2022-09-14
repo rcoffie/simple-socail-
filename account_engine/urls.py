@@ -11,4 +11,5 @@ urlpatterns = [
     path("password-change2/", views.password_change, name="password_change2"),
     path("add-follower/<int:pk>/", views.add_follower, name="add_follower"),
     path("remove-follwer/<int:pk>/", views.remove_follower, name="remove_follower"),
+    path('followes-list/<int:pk>/',views.followers_list, name="followers_list")
 ]
