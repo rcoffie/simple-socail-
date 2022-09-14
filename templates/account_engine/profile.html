@@ -34,7 +34,12 @@
     <h5 class="card-title"> {{user.firstname }} {{user.last_name }} </h5>
 
     <p>  <small class="text-muted">
-      {{user.username}} <br>Followers: {{total_followers}}
+      {{user.username}} <br>
+      {% if total_followers == 0   %}
+     Followers: {{total_followers}}
+     {% else %}
+     <a href="{% url 'followers_list' profile.id %}" class="text-decoration-none ">Followers: {{total_followers}} </a>
+     {% endif %}
     </small>
 </p>
     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
