@@ -5,10 +5,11 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 m-auto">
-      <button type="button" name="button">back to feed</button>
-      <div class="card">
+
+  <a class="btn btn-link text-decoration-none m-2" href="{% url 'index' %}"> back to feed  <i class="bi bi-house-fill"></i></a>
+  <div class="card border shadow-lg">
   <div class="card-header">
-    Featured
+    <i class="bi bi-person-bounding-box"></i> {{user.username|title}}
   </div>
   <div class="card-body">
     <div class=" clearfix">
@@ -24,25 +25,26 @@
       {%else%}
       <form class="" action="{% url 'add_follower' profile.id %}" method="POST">
           {% csrf_token %}
-          <button type="submit" class="btn btn-outline-primary float-end"> <i class="bi bi-plus"></i> follow</button>
+          <button type="submit" class="btn btn-outline-primary float-end"> <strong><i class="bi bi-plus"></i> follow </strong> </button>
       </form>
 
       {% endif %}
 
       {% endif %}
     </div>
-    <h5 class="card-title"> {{user.firstname }} {{user.last_name }} </h5>
+    <h5 class="card-title"> {{user.firstname }}  {{user.last_name }} </h5>
 
     <p>  <small class="text-muted">
       {{user.username}} <br>
       {% if total_followers == 0   %}
-     Followers: {{total_followers}}
+    <strong>Followers: {{total_followers}} </strong>
      {% else %}
-     <a href="{% url 'followers_list' profile.id %}" class="text-decoration-none ">Followers: {{total_followers}} </a>
+     <a href="{% url 'followers_list' profile.id %}" class="text-decoration-none "> <strong>  Followers <i class="bi bi-people"></i> : {{total_followers}}</strong> </a>
      {% endif %}
     </small>
 </p>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <p class="card-text"> {{ user.bio }} </p>
+    <p class="card-text"> {{ user.location }} </p>
     <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
