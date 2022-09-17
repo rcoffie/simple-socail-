@@ -20,9 +20,9 @@
 
   {% for follower in followers %}
   <div class="row justify-content-center">
-    <div class="col-md-5 p- mb-2 col-sm-12 postition-relative my-13">
-      <a href="{% url 'profile' follower.profile.pk %}"> <img class="rounded-circle post-img" height="60" width="60" src="{{ follower.profile.photo.url}}"alt=""> </a>
-      <a href="{% url 'profile' follower.profile.pk %}"> @{{follower.username}} </a>
+    <div class="col-md-5 p- mb-2 col-sm-12 postition-relative my-13 border shadow-lg rounded">
+      <a class="text-decoration-none" href="{% url 'profile' follower.profile.pk %}"> <img class="rounded-circle post-img" height="60" width="60" src="{{ follower.profile.photo.url}}"alt=""> </a>
+      <a class="text-decoration-none" href="{% url 'profile' follower.profile.pk %}"> @{{follower.username}} </a>
     </div>
   </div>
   {% endfor %}
