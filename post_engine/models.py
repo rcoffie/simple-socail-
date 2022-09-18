@@ -63,6 +63,7 @@ class Comment(models.Model):
     slug = models.SlugField(max_length=200, blank=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     body = models.TextField()
+    likes = models.ManyToManyField(User, related_name="comment_like")
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

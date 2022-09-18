@@ -34,7 +34,7 @@
             <i class="bi bi-heart-fill float-end"></i>
             <small class="float-end">{{post.get_total_likes}} </small>
             <br>
-
+            {{post.slug}}
            </div>
            <hr>
            <form class="" action="{% url 'like' post.id  %}" method="POST">
@@ -70,8 +70,19 @@
               <!-- <h5 class="card-title">Card title</h5> -->
               <h6 class="card-subtitle mb-2 text-muted"></h6>
               <p class="card-text">{{each.body}}</p>
+
               <a href="#" class="card-link"></a>
               <a href="#" class="card-link"></a>
+              <form class="" action="{% url 'like_comment' comment_slug=each.slug post_slug=post.slug  %}" method="POST">
+              {% csrf_token %}
+
+              {% if is_liked_comment %}
+               <button type="submit" class="btn btn-outline" value="#" name="#"> <h4> <i class="bi bi-hand-thumbs-down"></i> </h4> </button>
+               {% else %}
+               <button type="submit" value="#" class="btn btn-outline" name="#"> <h4> <i class="bi bi-hand-thumbs-up"></i> </h4> </button>
+               {% endif %}
+
+              </form>
             </div>
           </div>
           {% endfor %}
