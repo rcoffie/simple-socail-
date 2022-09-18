@@ -12,4 +12,5 @@ urlpatterns = [
     path("delete-comment/<int:pk>/", views.delete_comment, name="delete_comment"),
     path("like/<slug:slug>", views.like, name="like"),
     path('search-user/',views.search_user, name='search_user'),
+    path('like-comment/<slug:comment_slug>/post/<slug:post_slug>/',views.like_comment,name="like_comment")
 ]

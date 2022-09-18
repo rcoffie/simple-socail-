@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import (HttpResponseRedirect, get_object_or_404,
-                              redirect, render)
+                              redirect, render, HttpResponse)
 from django.urls import reverse, reverse_lazy
 
 from post_engine.forms import CommentForm, PostForm, SearchForm
@@ -76,6 +76,8 @@ def post_detail(request, slug):
     comments = Comment.objects.filter(post=post)
     total_comments = comments.count()
 
+    
+
     is_liked = False
     if post.likes.filter(id=request.user.id).exists():
         is_liked = True
@@ -99,6 +101,7 @@ def post_detail(request, slug):
         "total_comments": total_comments,
         "is_liked": is_liked,
         "total_likes": post.get_total_likes(),
+        "is_liked_comment":is_liked_comment,
     }
     return render(request, "post_engine/post_detail.html", context)
 
@@ -151,3 +154,29 @@ def search_user(request):
         )
 
     return render(request, 'post_engine/search_user.html',{'profile':profile,})
+
+
+def like_comment(request, comment_slug, post_slug):
+    comment = Comment.objects.get(slug=comment_slug)
+    post = Post.objects.get(slug=post_slug)
+    is_liked_comment = False
+    if comment.likes.filter(id=request.user.id).exists():
+        comment.likes.remove(request.user)
+        is_liked_comment = False
+    else:
+        comment.likes.add(request.user)
+        is_liked_comment = True
+    return HttpResponseRedirect(reverse("post_detail", args=[post.slug]))
+
+
+
+    # comment =  Comment.objects.get(pk=id)
+    # posts  = Post.objects.get(post_slug=post.slug)
+    # print(posts)
+    # print (post)
+    # if comment.likes.filter(id=request.user.id).exists():
+    #     comment.likes.remove(request.user)
+    # else:
+    #     comment.likes.add(request.user)
+    #
+    # return HttpResponseRedirect(reverse("post_detail", args=[post.slug]))
